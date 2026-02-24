@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Gestion des Livres</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body class="bg-light">
+        <header class="topbar">
+            <div>
+                <div class="hello">Bonjour <strong>Admin</strong></div>
+                <div class="sub">Gestion des livres</div>
+            </div>
+            <a class="btn btn-outline" href="login.html">Déconnexion</a>
+        </header>
+
+        <main class="container">
+            <section class="card">
+                <h2>Ajouter un nouveau livre</h2>
+                <form action="#" method="post" class="grid">
+                    <label class="field">
+                        <span>Titre</span>
+                        <input type="text" name="titre" required />
+                    </label>
+
+                    <label class="field">
+                        <span>Auteur</span>
+                        <input type="text" name="auteur" required />
+                    </label>
+
+                    <label class="field">
+                        <span>Année</span>
+                        <input type="number" name="annee" required />
+                    </label>
+
+                    <label class="field">
+                        <span>Disponible</span>
+                        <select name="disponible">
+                            <option value="1">Oui</option>
+                            <option value="0">Non</option>
+                        </select>
+                    </label>
+
+                    <div class="actions">
+                        <button class="btn btn-success" type="submit">
+                            Ajouter le livre
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="card">
+                <div class="card-head">
+                    <h2>Liste des livres</h2>
+                    <input
+                        class="search"
+                        type="search"
+                        placeholder="Rechercher (maquette)..."
+                    />
+                </div>
+
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Titre</th>
+                                <th>Auteur</th>
+                                <th>Année</th>
+                                <th>Disponible</th>
+                                <th>Modifier</th>
+                                <th>Supprimer</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+                <p class="hint">
+                    Tout est statique ici (pas de DB, pas de JS).
+                </p>
+            </section>
+        </main>
+
+        <script>
+            let livres = [
+                {
+                    id: 1,
+                    titre: "Le Petit Prince",
+                    auteur: "Antoine de Saint-Exupéry",
+                    annee: "1943",
+                    disponible: "OUI",
+                },
+                {
+                    id: 2,
+                    titre: "L'Étranger",
+                    auteur: "Albert Camus",
+                    annee: "1942",
+                    disponible: "Non",
+                },
+            ];
+            for (let livre of livres) {
+                document.getElementById("table-body").innerHTML += `
+                    <tr>
+                        <td>${livre.id}</td>
+                        <td>${livre.titre}</td>
+                        <td>${livre.auteur}</td>
+                        <td>${livre.annee}</td>
+                        <td>${livre.disponible}</td>
+                    </tr>
+                `;
+            }
+        </script>
+    </body>
+</html>
