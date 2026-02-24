@@ -21,29 +21,33 @@
                 <form action="#" method="post" class="grid">
                     <label class="field">
                         <span>Titre</span>
-                        <input type="text" name="titre" required />
+                        <input type="text" name="titre" id="titre" required />
                     </label>
 
                     <label class="field">
                         <span>Auteur</span>
-                        <input type="text" name="auteur" required />
+                        <input type="text" name="auteur" id="auteur" required />
                     </label>
 
                     <label class="field">
                         <span>Année</span>
-                        <input type="number" name="annee" required />
+                        <input type="number" name="annee" id="annee" required />
                     </label>
 
                     <label class="field">
                         <span>Disponible</span>
-                        <select name="disponible">
+                        <select name="disponible" id="disponible">
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select>
                     </label>
 
                     <div class="actions">
-                        <button class="btn btn-success" type="submit">
+                        <button
+                            class="btn btn-success"
+                            type="button"
+                            onclick="ajouterLivre()"
+                        >
                             Ajouter le livre
                         </button>
                     </div>
@@ -83,13 +87,13 @@
         </main>
 
         <script>
-            let livres = [
+            var livres = [
                 {
                     id: 1,
                     titre: "Le Petit Prince",
                     auteur: "Antoine de Saint-Exupéry",
                     annee: "1943",
-                    disponible: "OUI",
+                    disponible: "Oui",
                 },
                 {
                     id: 2,
@@ -99,16 +103,36 @@
                     disponible: "Non",
                 },
             ];
-            for (let livre of livres) {
-                document.getElementById("table-body").innerHTML += `
-                    <tr>
-                        <td>${livre.id}</td>
-                        <td>${livre.titre}</td>
-                        <td>${livre.auteur}</td>
-                        <td>${livre.annee}</td>
-                        <td>${livre.disponible}</td>
-                    </tr>
-                `;
+            function displayLivres() {
+                document.getElementById("table-body").innerHTML = "";
+                for (let livre of livres) {
+                    document.getElementById("table-body").innerHTML += `
+                        <tr>
+                            <td>${livre.id}</td>
+                            <td>${livre.titre}</td>
+                            <td>${livre.auteur}</td>
+                            <td>${livre.annee}</td>
+                            <td>${livre.disponible}</td>
+                        </tr>
+                    `;
+                }
+            }
+
+            displayLivres();
+
+            function ajouterLivre() {
+                let nvTitre = document.getElementById("titre").value;
+                let nvAuteur = document.getElementById("auteur").value;
+                let nvAnnee = document.getElementById("annee").value;
+                let nvDisponible = document.getElementById("disponible").value == 1 ? "Oui" : "Non";
+                livres.push({
+                    id: livres[livres.length - 1].id + 1,
+                    titre: nvTitre,
+                    auteur: nvAuteur,
+                    annee: nvAnnee,
+                    disponible: nvDisponible,
+                });
+                displayLivres();
             }
         </script>
     </body>
