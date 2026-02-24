@@ -113,6 +113,8 @@
                             <td>${livre.auteur}</td>
                             <td>${livre.annee}</td>
                             <td>${livre.disponible}</td>
+                            <td><button onclick="modifierLivre()" id="${livre.id}" class="btn btn-warning">Modifier</button></td>
+                            <td><button onclick="supprimerLivre()" id="${livre.id}" class="btn btn-danger">Supprimer</button></td>
                         </tr>
                     `;
                 }
@@ -133,6 +135,18 @@
                     disponible: nvDisponible,
                 });
                 displayLivres();
+            }
+
+            function supprimerLivre() {
+                let livreSupprimerId = event.target.id;
+                for (let i = 0; i < livres.length; i++) {
+                    if (livres[i].id == livreSupprimerId) {
+                        livres.splice(i, 1);
+                        displayLivres();
+                        return true;
+                    }
+                }
+                return false;
             }
         </script>
     </body>
