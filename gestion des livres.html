@@ -19,6 +19,7 @@
             <section class="card">
                 <h2>Ajouter un nouveau livre</h2>
                 <form action="#" method="post" class="grid">
+                    <input type="text" name="livre-id" id="livre-id" style="display: none;" required />
                     <label class="field">
                         <span>Titre</span>
                         <input type="text" name="titre" id="titre" required />
@@ -44,11 +45,21 @@
 
                     <div class="actions">
                         <button
+                            id="ajoute-button"
                             class="btn btn-success"
                             type="button"
                             onclick="ajouterLivre()"
                         >
                             Ajouter le livre
+                        </button>
+                        <button
+                            id="modifier-button"
+                            class="btn btn-warning"
+                            type="button"
+                            style="display: none;"
+                            onclick="modifier()"
+                        >
+                            Modifier le livre
                         </button>
                     </div>
                 </form>
@@ -128,7 +139,7 @@
                 let nvAnnee = document.getElementById("annee").value;
                 let nvDisponible = document.getElementById("disponible").value == 1 ? "Oui" : "Non";
                 livres.push({
-                    id: livres[livres.length - 1].id + 1,
+                    id: Math.trunc(Math.random() * 500),
                     titre: nvTitre,
                     auteur: nvAuteur,
                     annee: nvAnnee,
@@ -137,8 +148,8 @@
                 displayLivres();
             }
 
-            function supprimerLivre() {
-                let livreSupprimerId = event.target.id;
+            function supprimerLivre(id) {
+                let livreSupprimerId = id ?? event.target.id;
                 for (let i = 0; i < livres.length; i++) {
                     if (livres[i].id == livreSupprimerId) {
                         livres.splice(i, 1);
@@ -147,6 +158,51 @@
                     }
                 }
                 return false;
+            }
+
+            function modifierLivre() {
+                let livreModifierId = event.target.id;
+
+                document.getElementById('ajoute-button').style.display = 'none';
+                document.getElementById('modifier-button').style.display = 'inline';
+
+                for (let livre of livres) {
+                    if (livre.id == livreModifierId) {
+                        document.getElementById("livre-id").value = livre.id;
+                        document.getElementById("titre").value = livre.titre;
+                        document.getElementById("auteur").value = livre.auteur;
+                        document.getElementById("annee").value = livre.annee;
+                        document.getElementById("disponible").value = livre.disponible == "Oui" ? 1 : 0;
+                    }
+                }
+            }
+
+            function modifier() {
+                let modfId = document.getElementById("livre-id").value;
+                let modfTitre = document.getElementById("titre").value;
+                let modfAuteur = document.getElementById("auteur").value;
+                let modfAnnee = document.getElementById("annee").value;
+                let modfDisponible = document.getElementById("disponible").value == 1 ? "Oui" : "Non";
+
+                supprimerLivre(modfId);
+
+                livres.push({
+                    id: modfId,
+                    titre: modfTitre,
+                    auteur: modfAuteur,
+                    annee: modfAnnee,
+                    disponible: modfDisponible,
+                });
+
+                displayLivres();
+
+                document.getElementById('ajoute-button').style.display = 'inline';
+                document.getElementById('modifier-button').style.display = 'none';
+
+                document.getElementById("titre").value = "";
+                document.getElementById("auteur").value = "";
+                document.getElementById("annee").value = "";
+                document.getElementById("disponible").value = 1;
             }
         </script>
     </body>
