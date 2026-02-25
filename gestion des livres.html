@@ -71,6 +71,7 @@
                     <input
                         class="search"
                         type="search"
+                        id="search-input"
                         placeholder="Rechercher (maquette)..."
                     />
                 </div>
@@ -114,9 +115,9 @@
                     disponible: "Non",
                 },
             ];
-            function displayLivres() {
+            function displayLivres(listLivres = livres) {
                 document.getElementById("table-body").innerHTML = "";
-                for (let livre of livres) {
+                for (let livre of listLivres) {
                     document.getElementById("table-body").innerHTML += `
                         <tr>
                             <td>${livre.id}</td>
@@ -204,6 +205,23 @@
                 document.getElementById("annee").value = "";
                 document.getElementById("disponible").value = 1;
             }
+
+            var filterdLivres = [];
+            const search = document.getElementById('search-input');
+            search.addEventListener("input", function() {
+                let titreToSearch = event.target.value.toLowerCase();
+                filterdLivres = [];
+                if (titreToSearch.length != 0) {
+                    for (let livre of livres) {
+                        if (livre.titre.toLowerCase().startsWith(titreToSearch) === true) {
+                            filterdLivres.push(livre);
+                        }
+                        displayLivres(filterdLivres);
+                    }
+                } else {
+                    displayLivres(livres);
+                }
+            });
         </script>
     </body>
 </html>
